@@ -87,7 +87,36 @@ fun GeoQuizScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
 
+            if (!isAnswered) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(
+                        onClick = {
+                            if (currentQuestion.answer) score++
+                            isAnswered = true
+                            checkEndGame(isLastQuestion, score, context)
+                        },
+                        modifier = Modifier.weight(1f).padding(end = 8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Magenta)
+                    ) {
+                        Text("TRUE", color = Color.White)
+                    }
 
+                    Button(
+                        onClick = {
+                            if (!currentQuestion.answer) score++
+                            isAnswered = true
+                            checkEndGame(isLastQuestion, score, context)
+                        },
+                        modifier = Modifier.weight(1f).padding(start = 8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Magenta)
+                    ) {
+                        Text("FALSE", color = Color.White)
+                    }
+                }
+            }
         }
     }
 }
