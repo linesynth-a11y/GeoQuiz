@@ -78,6 +78,15 @@ fun GeoQuizScreen() {
         ) {
             Spacer(modifier = Modifier.weight(1f))
 
+            Text(
+                text = currentQuestion.text,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
 
         }
     }
