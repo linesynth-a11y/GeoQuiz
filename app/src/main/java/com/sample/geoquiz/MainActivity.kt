@@ -51,6 +51,13 @@ fun GeoQuizScreen() {
         Question("Lake Baikal is the world's oldest and deepest freshwater lake.", true)
     )
 
+    var currentIndex by remember { mutableStateOf(0) }
+    var score by remember { mutableStateOf(0) }
+    var isAnswered by remember { mutableStateOf(false) }
+
+    val currentQuestion = questions[currentIndex]
+    val isLastQuestion = currentIndex == questions.lastIndex
+
 
 }
 
