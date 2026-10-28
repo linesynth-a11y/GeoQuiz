@@ -58,7 +58,29 @@ fun GeoQuizScreen() {
     val currentQuestion = questions[currentIndex]
     val isLastQuestion = currentIndex == questions.lastIndex
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("GeoQuiz", color = Color.White, fontSize = 22.sp) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Magenta
+                )
+            )
+        }
+    ) {
+            paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
 
+
+        }
+    }
 }
 
 
