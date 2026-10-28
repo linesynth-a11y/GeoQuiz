@@ -116,7 +116,26 @@ fun GeoQuizScreen() {
                         Text("FALSE", color = Color.White)
                     }
                 }
+            } else if (!isLastQuestion) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(
+                        onClick = {
+                            currentIndex++
+                            isAnswered = false
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Magenta)
+                    ) {
+                        Text("NEXT  >", color = Color.White)
+                    }
+                }
+            } else {
+                Spacer(modifier = Modifier.height(48.dp))
             }
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
