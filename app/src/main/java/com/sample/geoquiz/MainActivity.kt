@@ -55,6 +55,10 @@ fun GeoQuizScreen() {
     var score by remember { mutableStateOf(0) }
     var isAnswered by remember { mutableStateOf(false) }
 
+    var showResultDialog by remember { mutableStateOf(false) }
+    var finalScore by remember { mutableStateOf(0) }
+
+
     val currentQuestion = questions[currentIndex]
     val isLastQuestion = currentIndex == questions.lastIndex
 
@@ -94,9 +98,14 @@ fun GeoQuizScreen() {
                 ) {
                     Button(
                         onClick = {
-                            if (currentQuestion.answer) score++
+                            val updatedScore = if (currentQuestion.answer) score + 1 else score
+                            score = updatedScore
                             isAnswered = true
-                            checkEndGame(isLastQuestion, score, context)
+
+                            if (isLastQuestion) {
+                                finalScore = updatedScore
+                                showResultDialog = true
+                            }
                         },
                         modifier = Modifier.weight(1f).padding(end = 8.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Magenta)
@@ -106,9 +115,14 @@ fun GeoQuizScreen() {
 
                     Button(
                         onClick = {
-                            if (!currentQuestion.answer) score++
+                            val updatedScore = if (!currentQuestion.answer) score + 1 else score
+                            score = updatedScore
                             isAnswered = true
-                            checkEndGame(isLastQuestion, score, context)
+
+                            if (isLastQuestion) {
+                                finalScore = updatedScore
+                                showResultDialog = true
+                            }
                         },
                         modifier = Modifier.weight(1f).padding(start = 8.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Magenta)
@@ -132,11 +146,48 @@ fun GeoQuizScreen() {
                     }
                 }
             } else {
-                Spacer(modifier = Modifier.height(48.dp))
+                Text("вы ответили на все вопросы", color = Color.Gray)
             }
 
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+
+    if (showResultDialog) {
+        AlertDialog(
+            onDismissRequest = { showResultDialog = false },
+            title = {
+                Text(
+                    text = "тест завершен",
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "правильных ответов: $finalScore из ${questions.size}",
+                    fontSize = 18.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showResultDialog = false
+                        currentIndex = 0
+                        score = 0
+                        isAnswered = false
+                    }
+                ) {
+                    Text("начать заново")
+                }
+            }
+        )
+    }
+}
+
+fun checkEndGame(isLastQuestion: Boolean, score: Int, context: android.content.Context) {
+    if (isLastQuestion) {
+        val message = "тест завершен. \nправильных ответов: $score из 6"
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }
 
